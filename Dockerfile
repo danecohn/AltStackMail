@@ -5,7 +5,7 @@ COPY portal/package.json portal/package-lock.json ./
 RUN npm ci --omit=dev --ignore-scripts
 COPY portal/server.mjs ./
 COPY assets/logo.svg /app/assets/logo.svg
-RUN mkdir -p /app/web && curl -fL --retry 3 https://github.com/danecohn/AltStackMail/releases/download/altstack-mail-v1.0.0/AltStackMail-web.tar.gz -o /tmp/client.tar.gz && echo '32b9009ec75ca3b5e459544648d0411e55bf0e4f36d1087fbc6f5bb1af3226b8  /tmp/client.tar.gz' | sha256sum -c - && tar -xzf /tmp/client.tar.gz -C /app/web && rm /tmp/client.tar.gz && test -s /app/web/index.html && test -s /app/web/worker.js
+RUN mkdir -p /app/web && curl -fL --retry 3 https://github.com/danecohn/AltStackMail/releases/download/altstack-mail-v1.0.1/AltStackMail-web.tar.gz -o /tmp/client.tar.gz && echo 'bf1179cb16e4e3b1212cc7a562bf962e65ae7b8cb87391d8435230c6fddda6c7  /tmp/client.tar.gz' | sha256sum -c - && tar -xzf /tmp/client.tar.gz -C /app/web && rm /tmp/client.tar.gz && test -s /app/web/index.html && test -s /app/web/worker.js
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod 755 /app/entrypoint.sh
 ENV NODE_ENV=production WEB_DIR=/app/web DATA_DIR=/data PORT=3000
