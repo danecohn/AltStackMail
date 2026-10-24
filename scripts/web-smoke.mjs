@@ -4,8 +4,11 @@ const server=http.createServer(async(req,res)=>{let path;try{path=resolve(root,'
 await new Promise(r=>server.listen(8099,'127.0.0.1',r));await mkdir('validation',{recursive:true});const browser=await chromium.launch({headless:true});
 try{for(const[device,size]of Object.entries({desktop:{width:1440,height:960},mobile:{width:390,height:844}})){
  const page=await browser.newPage({viewport:size});const errors=[];page.on('pageerror',error=>errors.push(error.message));await page.goto('http://127.0.0.1:8099/login',{waitUntil:'domcontentloaded'});await page.locator('#altstack-client input[type=password]').waitFor({timeout:90000});
+ const backend=await page.evaluate(()=>env.domainConfigs['{hostname}']);
+ if(backend.apiUrl!=='https://app.tuta.com'||backend.websocketUrl!=='wss://app.tuta.com')throw Error('Custom portal must use the real Tuta service');
  if(!await page.getByRole('navigation',{name:'AltStack Mail apps'}).isVisible())throw Error('AltStack navigation is missing');
  if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1))throw Error('Horizontal overflow on '+device);
  await page.screenshot({path:'validation/Mail-'+device+'.png',fullPage:true});await page.getByRole('link',{name:'Calendar',exact:true}).click();await page.locator('#altstack-client input[type=password]').waitFor();
  if(errors.length)throw Error(errors.join('\n'));await page.close();
 }}finally{await browser.close();await new Promise(r=>server.close(r));}
+

@@ -1,4 +1,4 @@
-AltStack Mail & Calendar 1.0.0
+AltStack Mail & Calendar 1.0.1
 
 An AltStack LLC client built from the Tuta browser client at commit d589cf8c6f6855a314db39e059cffb464f805e19, with the upstream Mail and Calendar interfaces, AltStack branding and Alpine chrome.
 
@@ -7,3 +7,4 @@ Use an AltStack account for the AltStack portal and a Tuta account for your mail
 Installers for Windows x64/ARM64, macOS Intel/Apple Silicon and Linux x64/ARM64. These applications use a sandboxed host for the same browser client; upstream's native desktop bridge is not used on unsupported architectures. Windows installers are unsigned and macOS is not notarized. Downloads and updates are provided through this release and the AltStack downloads page.
 
 GPLv3 and original copyright notices are included. Corresponding modifications and build scripts are in this repository; pinned upstream source and submodules remain linked in upstream.json. Tuta/Tutao do not endorse this independent distribution.
+
