@@ -1,0 +1,28 @@
+name: Verify production Mail portal image
+on:
+  push:
+    branches: [main]
+    paths: [Dockerfile, entrypoint.sh, .dockerignore, .github/workflows/portal-image.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  image:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build verified released client and account portal
+        run: docker build -t altstack-mail .
+      - name: Verify persistent state and account gate
+        run: |
+          docker volume create mail-state
+          docker run -d --name mail -p 3000:3000 -v mail-state:/data -e PUBLIC_ORIGIN=https://mail.example.test -e ALTSTACK_ORIGIN=https://platform.example.test -e MAIL_OIDC_SECRET=fixture-oidc-secret-not-for-production-12345 -e MAIL_SERVICE_SECRET=fixture-service-secret-not-for-production-12345 altstack-mail
+          for attempt in $(seq 1 30); do curl -fsS http://localhost:3000/healthz && break; sleep 1; done
+          test "$(curl -sS -o /tmp/gate.txt -w '%{http_code}' http://localhost:3000/mail)" = 303
+          curl -fsS http://localhost:3000/about | grep -q 'AltStack Mail'
+          docker exec mail test -s /data/mail.sqlite
+          test "$(docker exec mail stat -c %U /data/mail.sqlite)" = node
+      - name: Diagnostics
+        if: always()
+        run: docker logs mail || true
+
