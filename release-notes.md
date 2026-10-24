@@ -1,4 +1,6 @@
-AltStack Mail & Calendar 1.0.1
+AltStack Mail & Calendar 1.0.2
+
+1.0.2 fixes the macOS installers: 1.0.1 shipped with a broken app signature and macOS reported the app as damaged. The signature is now sealed correctly and checked in CI. The web client is unchanged from 1.0.1.
 
 An AltStack LLC client built from the Tuta browser client at commit d589cf8c6f6855a314db39e059cffb464f805e19, with the upstream Mail and Calendar interfaces, AltStack branding and Alpine chrome.
 
