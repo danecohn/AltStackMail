@@ -1,0 +1,20 @@
+{
+  "name": "altstack-mail-portal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test test.mjs"
+  },
+  "dependencies": {
+    "openid-client": "6.8.4"
+  },
+  "engines": {
+    "node": ">=24.17.0"
+  },
+  "devDependencies": {
+    "oidc-provider": "9.13.0"
+  }
+}

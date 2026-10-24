@@ -1,6 +1,7 @@
 import {app,BrowserWindow,Menu,shell,dialog,session} from 'electron';
 import {readFileSync} from 'node:fs';import {fileURLToPath} from 'node:url';import {join,dirname} from 'node:path';
 const here=dirname(fileURLToPath(import.meta.url)),config=JSON.parse(readFileSync(join(here,'../upstream.json'),'utf8'));
+if(process.argv.includes('--smoke-test'))app.disableHardwareAcceleration();
 const allowed=new Set([new URL(config.mailOrigin).origin,new URL(config.platformOrigin).origin]);let window;
 const external=async value=>{let url;try{url=new URL(value);}catch{return;}if(['https:','http:','mailto:'].includes(url.protocol))await shell.openExternal(url.href);};
 const open=(route='')=>window.loadURL(config.mailOrigin+route);
@@ -19,4 +20,4 @@ async function createWindow(){
  if(process.argv.includes('--smoke-test')){await window.loadFile(join(here,'offline.html'));await new Promise(resolve=>setTimeout(resolve,1200));const image=await window.webContents.capturePage();const {writeFileSync}=await import('node:fs');writeFileSync(process.argv[process.argv.indexOf('--smoke-test')+1],image.toPNG());app.quit();return;}
  await open(process.argv.includes('--calendar')?'/calendar':'/mail');
 }
-if(!app.requestSingleInstanceLock())app.quit();else{app.on('second-instance',()=>{if(window){window.show();window.focus();}});app.whenReady().then(createWindow);app.on('window-all-closed',()=>{if(process.platform!=='darwin')app.quit();});app.on('activate',()=>{if(BrowserWindow.getAllWindows().length===0)createWindow();});}
+if(!app.requestSingleInstanceLock())app.quit();else{app.on('second-instance',()=>{if(window){window.show();window.focus();}});app.whenReady().then(createWindow).catch(error=>{console.error('Mail desktop startup failed:',error.message);app.exit(1);});app.on('window-all-closed',()=>{if(process.platform!=='darwin')app.quit();});app.on('activate',()=>{if(BrowserWindow.getAllWindows().length===0)createWindow();});}

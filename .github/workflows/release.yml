@@ -2,7 +2,7 @@ name: Build AltStack Mail and Calendar
 on:
   push:
     branches: [main]
-    paths: ["assets/**", "desktop/**", "scripts/**", "upstream.json", "package*.json", ".github/workflows/release.yml", "release-notes.md"]
+    paths: ["assets/**", "desktop/**", "scripts/**", "upstream.json", "package*.json", ".github/workflows/release.yml", "release-notes.md", "portal/**"]
   workflow_dispatch:
 permissions:
   contents: write
@@ -10,6 +10,18 @@ concurrency:
   group: altstack-mail-release
   cancel-in-progress: true
 jobs:
+  portal:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.22.1'
+      - name: Verify account login, PKCE, session isolation and logout
+        working-directory: portal
+        run: |
+          npm ci --ignore-scripts
+          npm test
   web:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
@@ -53,7 +65,7 @@ jobs:
           tar -czf AltStackMail-web.tar.gz -C web .
           sha256sum AltStackMail-web.tar.gz > AltStackMail-web.tar.gz.sha256
           mkdir -p corresponding-source/altstack
-          cp -R scripts assets desktop package.json package-lock.json upstream.json README.md THIRD-PARTY.md LICENSE.txt corresponding-source/altstack/
+          git archive HEAD | tar -x -C corresponding-source/altstack
           tar --exclude=.git --exclude=node_modules --exclude=build --exclude=cache --exclude=target -czf corresponding-source/tuta.tar.gz -C upstream .
           tar -czf AltStackMail-source.tar.gz -C corresponding-source .
           sha256sum AltStackMail-source.tar.gz > AltStackMail-source.tar.gz.sha256
@@ -101,6 +113,7 @@ jobs:
             runner: ubuntu-24.04-arm
             args: --linux --arm64
     runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -115,11 +128,12 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
         run: npx electron-builder ${{ matrix.args }} --publish never
       - name: Verify desktop host launches
+        timeout-minutes: 3
         shell: bash
         run: |
           mkdir -p validation
           if [ "$RUNNER_OS" = "Linux" ]; then
-            xvfb-run -a npx electron --no-sandbox . --smoke-test validation/desktop-host.png
+            xvfb-run -a npx electron --no-sandbox --disable-gpu . --smoke-test validation/desktop-host.png
           else
             npx electron . --smoke-test validation/desktop-host.png
           fi
@@ -134,7 +148,7 @@ jobs:
           path: artifacts/AltStackMail-*
           if-no-files-found: error
   publish:
-    needs: [web,desktop]
+    needs: [web,desktop,portal]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
