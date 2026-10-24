@@ -124,9 +124,29 @@ jobs:
           python-version: '3.13'
       - run: npm ci
       - name: Package native installer
+        shell: bash
         env:
-          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
-        run: npx electron-builder ${{ matrix.args }} --publish never
+          # macOS: with a Developer ID in the repository secrets the app is signed and notarized by Apple.
+          # Without them it is re-sealed ad hoc (scripts/adhoc-sign.cjs): valid, but macOS asks for a one-time approval.
+          CSC_LINK: ${{ secrets.MAC_CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CSC_KEY_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          CSC_IDENTITY_AUTO_DISCOVERY: ${{ secrets.MAC_CSC_LINK != '' && 'true' || 'false' }}
+        run: |
+          EXTRA=""
+          if [ -n "$CSC_LINK" ] && [ -n "$APPLE_ID" ] && [ "$RUNNER_OS" = "macOS" ]; then EXTRA="-c.mac.notarize=true"; fi
+          npx electron-builder ${{ matrix.args }} --publish never $EXTRA
+      - name: Verify the macOS app signature (a broken seal is what makes Finder say "damaged")
+        if: runner.os == 'macOS'
+        run: |
+          mkdir -p validation
+          APP=$(ls -d release/mac*/*.app | head -1)
+          codesign --verify --deep --strict --verbose=2 "$APP"
+          codesign -dv "$APP" 2>&1 | grep -E 'Signature|Info.plist=' ; ! codesign -dv "$APP" 2>&1 | grep -q 'Info.plist=not bound'
+          "$APP/Contents/MacOS/AltStack Mail" --smoke-test validation/packaged-mac.png
+          test -s validation/packaged-mac.png
       - name: Verify desktop host launches
         timeout-minutes: 3
         shell: bash
