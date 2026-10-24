@@ -1,0 +1,151 @@
+name: Build AltStack Mail and Calendar
+on:
+  push:
+    branches: [main]
+    paths: ["assets/**", "desktop/**", "scripts/**", "upstream.json", "package*.json", ".github/workflows/release.yml", "release-notes.md"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: altstack-mail-release
+  cancel-in-progress: true
+jobs:
+  web:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.22.1'
+      - name: Check out pinned Tuta source and submodules
+        run: |
+          git clone --depth 1 --branch tutanota-desktop-release-362.261023.2 https://github.com/tutao/tutanota.git upstream
+          test "$(git -C upstream rev-parse HEAD)" = d589cf8c6f6855a314db39e059cffb464f805e19
+          git -C upstream submodule update --init --recursive --depth 1
+      - name: Prepare WebAssembly toolchain
+        run: |
+          git clone --depth 1 --branch 3.1.59 https://github.com/emscripten-core/emsdk.git /tmp/emsdk
+          /tmp/emsdk/emsdk install 3.1.59
+          /tmp/emsdk/emsdk activate 3.1.59
+          rustup target add wasm32-unknown-unknown
+      - name: Apply AltStack presentation and build upstream browser client
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+          NODE_OPTIONS: --max-old-space-size=6144
+        run: |
+          source /tmp/emsdk/emsdk_env.sh
+          export PATH="$RUNNER_TOOL_CACHE/node/24.22.1/x64/bin:$PATH"
+          python3 scripts/brand.py upstream
+          cd upstream
+          npm ci
+          node webapp prod --app mail
+      - name: Assemble the real Mail and Calendar web app
+        run: |
+          mkdir web
+          cp -R upstream/build/. web/
+          cp assets/altstack.css assets/altstack.js web/
+          cp LICENSE.txt THIRD-PARTY.md web/
+          cp upstream/third-party.txt web/upstream-third-party.txt
+          test -s web/index.html
+          test -s web/app.js
+          test -s web/worker.js
+          tar -czf AltStackMail-web.tar.gz -C web .
+          sha256sum AltStackMail-web.tar.gz > AltStackMail-web.tar.gz.sha256
+          mkdir -p corresponding-source/altstack
+          cp -R scripts assets desktop package.json package-lock.json upstream.json README.md THIRD-PARTY.md LICENSE.txt corresponding-source/altstack/
+          tar --exclude=.git --exclude=node_modules --exclude=build --exclude=cache --exclude=target -czf corresponding-source/tuta.tar.gz -C upstream .
+          tar -czf AltStackMail-source.tar.gz -C corresponding-source .
+          sha256sum AltStackMail-source.tar.gz > AltStackMail-source.tar.gz.sha256
+      - name: Verify real Mail login and Calendar navigation on desktop and mobile
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.58.2
+          npx playwright install --with-deps chromium
+          node scripts/web-smoke.mjs
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Mail-web-previews
+          path: validation/*.png
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Mail-web
+          path: |
+            AltStackMail-web.tar.gz*
+            AltStackMail-source.tar.gz*
+          if-no-files-found: error
+  desktop:
+    needs: web
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: windows-x64
+            runner: windows-2025
+            args: --win --x64
+          - target: windows-arm64
+            runner: windows-11-arm
+            args: --win --arm64
+          - target: macos-x64
+            runner: macos-15-intel
+            args: --mac --x64
+          - target: macos-arm64
+            runner: macos-15
+            args: --mac --arm64
+          - target: linux-x64
+            runner: ubuntu-24.04
+            args: --linux --x64
+          - target: linux-arm64
+            runner: ubuntu-24.04-arm
+            args: --linux --arm64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.22.1'
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - run: npm ci
+      - name: Package native installer
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: npx electron-builder ${{ matrix.args }} --publish never
+      - name: Verify desktop host launches
+        shell: bash
+        run: |
+          mkdir -p validation
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            xvfb-run -a npx electron --no-sandbox . --smoke-test validation/desktop-host.png
+          else
+            npx electron . --smoke-test validation/desktop-host.png
+          fi
+          test -s validation/desktop-host.png
+      - name: Check installer and checksum
+        shell: bash
+        run: |
+          python3 scripts/release.py '${{ matrix.target }}'
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Mail-${{ matrix.target }}
+          path: artifacts/AltStackMail-*
+          if-no-files-found: error
+  publish:
+    needs: [web,desktop]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: Mail-*
+          path: artifacts
+          merge-multiple: true
+      - name: Publish verified web app and all six installers
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$(find artifacts -maxdepth 1 -type f -name 'AltStackMail-*' ! -name '*.sha256' | wc -l)" -eq 8
+          gh release create altstack-mail-v1.0.0 artifacts/AltStackMail-* --target "$GITHUB_SHA" --title 'AltStack Mail & Calendar 1.0.0' --notes-file release-notes.md
