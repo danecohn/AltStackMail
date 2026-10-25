@@ -1,4 +1,4 @@
-AltStack Mail & Calendar is independently modified by AltStack LLC.
+AltStack Mail & Calendar is independently modified by Artemis Softworks LLC.
 
 Tuta client code: Copyright Tutao GmbH and contributors, GPL version 3. Exact source commit: https://github.com/tutao/tutanota/tree/d589cf8c6f6855a314db39e059cffb464f805e19 . Upstream legal notices and third-party.txt are retained in the web distribution. Submodule revisions are pinned by that commit; their own licenses are preserved.
 

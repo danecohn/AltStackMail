@@ -1,6 +1,15 @@
 # AltStack Mail & Calendar
 
-An independent AltStack LLC distribution of Tuta's GPLv3 web client, with the AltStack Alpine interface, Mail and Calendar in one app, an AltStack account portal, and six desktop installers.
+<!-- artemis-publisher:start -->
+<img src="brand/artemis/artemis-wordmark.svg" alt="Artemis Softworks LLC" width="340">
+
+**A product of Artemis Softworks LLC.** Founded by **Demetria Althea Cohn**.
+
+Companion software for macOS, thoughtfully available for Windows and Linux. See the [Artemis identity and design system](brand/artemis/BRAND.md). Platform availability varies by product and release.
+<!-- artemis-publisher:end -->
+
+
+An independent Artemis Softworks LLC distribution of Tuta's GPLv3 web client, with the AltStack Alpine interface, Mail and Calendar in one app, an AltStack account portal, and six desktop installers.
 
 An AltStack account is required for the AltStack-hosted portal. A separate Tuta account provides the encrypted mailbox and calendars. Email credentials and encryption keys remain in Tuta's client-side authentication/encryption flow. AltStack does not replace that encryption, host a new mail server, grant Tuta subscriptions, or combine Tuta mailbox capacity with Warehouse capacity. Files copied into Warehouse use the shared AltStack 2 GB Free / 8 GB Plus allowance.
 

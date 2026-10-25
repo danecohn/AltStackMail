@@ -6,9 +6,7 @@
   "private": true,
   "license": "GPL-3.0-or-later",
   "description": "AltStack Mail and Calendar, based on the Tuta browser client",
-  "author": {
-    "name": "AltStack LLC"
-  },
+  "author": "Artemis Softworks LLC",
   "main": "desktop/main.mjs",
   "scripts": {
     "desktop": "electron .",
@@ -60,8 +58,9 @@
       ],
       "icon": "assets/logo.png",
       "category": "Office",
-      "maintainer": "AltStack LLC"
+      "maintainer": "Artemis Softworks LLC"
     },
-    "afterPack": "scripts/adhoc-sign.cjs"
+    "afterPack": "scripts/adhoc-sign.cjs",
+    "copyright": "Copyright © 2026 Artemis Softworks LLC"
   }
 }

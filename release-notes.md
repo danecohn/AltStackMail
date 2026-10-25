@@ -2,7 +2,7 @@ AltStack Mail & Calendar 1.0.2
 
 1.0.2 fixes the macOS installers: 1.0.1 shipped with a broken app signature and macOS reported the app as damaged. The signature is now sealed correctly and checked in CI. The web client is unchanged from 1.0.1.
 
-An AltStack LLC client built from the Tuta browser client at commit d589cf8c6f6855a314db39e059cffb464f805e19, with the upstream Mail and Calendar interfaces, AltStack branding and Alpine chrome.
+An Artemis Softworks LLC client built from the Tuta browser client at commit d589cf8c6f6855a314db39e059cffb464f805e19, with the upstream Mail and Calendar interfaces, AltStack branding and Alpine chrome.
 
 Use an AltStack account for the AltStack portal and a Tuta account for your mailbox and calendar. Tuta remains the encrypted email/calendar service and applies its own account plans. Files saved to Warehouse use your shared AltStack 2 GB Free / 8 GB Plus file allowance.
 

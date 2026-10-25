@@ -16,5 +16,6 @@
   },
   "devDependencies": {
     "oidc-provider": "9.13.0"
-  }
+  },
+  "author": "Artemis Softworks LLC"
 }
