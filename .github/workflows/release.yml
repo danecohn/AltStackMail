@@ -185,5 +185,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           test "$(find artifacts -maxdepth 1 -type f -name 'AltStackMail-*' ! -name '*.sha256' | wc -l)" -eq 8
-          gh release create altstack-mail-v1.0.2 artifacts/AltStackMail-* --target "$GITHUB_SHA" --title 'AltStack Mail & Calendar 1.0.2' --notes-file release-notes.md
+          VERSION="$(node -p "require('./package.json').version")"
+          TAG="altstack-mail-v${VERSION}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" artifacts/AltStackMail-* --clobber
+            gh release edit "$TAG" --title "AltStack Mail & Calendar ${VERSION}" --notes-file release-notes.md
+          else
+            gh release create "$TAG" artifacts/AltStackMail-* --target "$GITHUB_SHA" --title "AltStack Mail & Calendar ${VERSION}" --notes-file release-notes.md
+          fi
 
