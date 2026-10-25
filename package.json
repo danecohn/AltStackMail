@@ -1,7 +1,7 @@
 {
   "name": "altstack-mail",
   "productName": "AltStack Mail",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "private": true,
   "license": "GPL-3.0-or-later",
@@ -61,6 +61,6 @@
       "maintainer": "Artemis Softworks LLC"
     },
     "afterPack": "scripts/adhoc-sign.cjs",
-    "copyright": "Copyright © 2026 Artemis Softworks LLC"
+    "copyright": "Copyright \u00a9 2026 Artemis Softworks LLC"
   }
 }
