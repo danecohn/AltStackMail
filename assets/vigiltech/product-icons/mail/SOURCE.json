@@ -1,0 +1,92 @@
+{
+  "repository": "https://github.com/danecohn/vigilicons",
+  "commit": "41f4ba10777880a6929e593638efbe86f8e2a64c",
+  "product": "mail",
+  "files": [
+    {
+      "path": "desktop/mail-1024.png",
+      "source": "products/mail/desktop/mail-1024.png",
+      "sha256": "4d1a31e2304a0898acd63a9b56863fa877ab4c30628d9a22da4fdf2a99829d38"
+    },
+    {
+      "path": "desktop/mail-256.png",
+      "source": "products/mail/desktop/mail-256.png",
+      "sha256": "deaa49baf686448cc48f623421202a4b75976f5b77ad05c815d537daf9eb5ab7"
+    },
+    {
+      "path": "desktop/mail.icns",
+      "source": "products/mail/desktop/mail.icns",
+      "sha256": "80e0309d50383eabdb1ac9eb25e7e637ae62204b0e8a8afd24c56d4e5ff8b613"
+    },
+    {
+      "path": "desktop/mail-32.png",
+      "source": "products/mail/desktop/mail-32.png",
+      "sha256": "79735ee62ec1b0bb7460d4437a309f028c1203a42332c7d2e15d3b52d8ddd528"
+    },
+    {
+      "path": "desktop/mail-16.png",
+      "source": "products/mail/desktop/mail-16.png",
+      "sha256": "31006c13a803e4d3001d7df7e5bda0df8d0eb9d15dca810f9c79ae1b0f390f5b"
+    },
+    {
+      "path": "desktop/mail.ico",
+      "source": "products/mail/desktop/mail.ico",
+      "sha256": "06a737e6d029bd961dfc8f688dd71281a920e3dce8de690b8d745fb3bfa59acc"
+    },
+    {
+      "path": "desktop/mail-48.png",
+      "source": "products/mail/desktop/mail-48.png",
+      "sha256": "c7775643e45979cc9e62c0dccf350a7dd63dace2e911a8ffd5a429af6757b5a3"
+    },
+    {
+      "path": "desktop/mail-64.png",
+      "source": "products/mail/desktop/mail-64.png",
+      "sha256": "34f14316f850c1e0ecc424d8f75c569b74f4bba5c1fd6678c2f61a0a55aedb8a"
+    },
+    {
+      "path": "desktop/mail-512.png",
+      "source": "products/mail/desktop/mail-512.png",
+      "sha256": "b86c3795c80cc5ef391fc0abdff9a28bc534c7271006f854da4e84607f34a312"
+    },
+    {
+      "path": "desktop/mail-128.png",
+      "source": "products/mail/desktop/mail-128.png",
+      "sha256": "e82eb70997e18cfc53caa29fec583cf4f73a7997b350bf9111e7d41279d440c8"
+    },
+    {
+      "path": "web/favicon.ico",
+      "source": "products/mail/web/favicon.ico",
+      "sha256": "5fb1330ef47c846d484d34c3c38fdaecbc7043f43239b26e2baf54b73cb52072"
+    },
+    {
+      "path": "web/apple-touch-icon.png",
+      "source": "products/mail/web/apple-touch-icon.png",
+      "sha256": "1b8a94b838b54fc84cb646faf3acd01d7209cf7e89c0c4dbaff7a70ea92a1d3d"
+    },
+    {
+      "path": "web/favicon-16.png",
+      "source": "products/mail/web/favicon-16.png",
+      "sha256": "ddd3faa6e6ed4c5bf7fd3b535759892a555328cf2eeb715a4911abf368715774"
+    },
+    {
+      "path": "web/icon-192.png",
+      "source": "products/mail/web/icon-192.png",
+      "sha256": "14272e0fdbff3344a3d6de0f5484bc4aacc79574b5e578840c922a8659776eb3"
+    },
+    {
+      "path": "web/maskable-512.png",
+      "source": "products/mail/web/maskable-512.png",
+      "sha256": "0460f5739d33c7128879271eb336469abc7689c924b22c37a23a5d858bb2d8a6"
+    },
+    {
+      "path": "web/favicon-32.png",
+      "source": "products/mail/web/favicon-32.png",
+      "sha256": "83d9856c9c51ac006a4d7caf9735848ee95e2b86b3c7a8005891b9f53aa79036"
+    },
+    {
+      "path": "web/icon-512.png",
+      "source": "products/mail/web/icon-512.png",
+      "sha256": "0460f5739d33c7128879271eb336469abc7689c924b22c37a23a5d858bb2d8a6"
+    }
+  ]
+}

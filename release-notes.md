@@ -1,7 +1,7 @@
-Cohnsoft Mail & Calendar 1.0.5 — Cohnsoft
+Vigil Mail & Calendar 1.0.7 — VigilTech
 
-Produced and developed by Cohnsoft, founded by Demetria Althea Cohn. This release adds the sculpted Mail icon, refines the blue cloud interface, and includes the original crescent-and-bow identity, Artemis application artwork, and current publisher credits. Existing accounts, data locations, application identifiers and upstream Tuta notices are retained.
+Uses the finished VigilTech Mail and Calendar icon kits, company artwork, Vigil Sans and pink Night/Dawn interface. Existing accounts, data locations, application identifiers and upstream Tuta notices are retained.
 
-macOS packages continue to use ad-hoc signing and strict verification; they are not Apple-notarized. Windows packages remain unsigned. The publisher identity is application metadata, not a claim of an Apple or Microsoft signing certificate.
+macOS packages are ad-hoc signed and strictly verified; they are not Apple-notarized. Windows packages remain unsigned. The publisher name is application metadata.
 
-The 1.0.2 Mac signature repair remains included. Upstream Tuta source, GPL license and original contributors remain credited.
+Upstream Tuta source, GPL license and original contributors remain credited. No sound plays automatically.

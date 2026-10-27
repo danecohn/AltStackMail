@@ -1,4 +1,4 @@
-name: Build Cohnsoft Mail & Calendar
+name: Build Vigil Mail & Calendar
 on:
   push:
     branches: [main]
@@ -41,7 +41,7 @@ jobs:
           /tmp/emsdk/emsdk install 3.1.59
           /tmp/emsdk/emsdk activate 3.1.59
           rustup target add wasm32-unknown-unknown
-      - name: Apply Cohnsoft presentation and build upstream browser client
+      - name: Apply VigilTech presentation and build upstream browser client
         env:
           ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
           NODE_OPTIONS: --max-old-space-size=6144
@@ -57,20 +57,20 @@ jobs:
           mkdir web
           cp -R upstream/build/. web/
           cp assets/altstack.css assets/altstack.js web/
-          cp -R assets/cohnsoft web/cohnsoft
+          cp -R assets/vigiltech web/vigiltech
           node scripts/rebrand-web.mjs web assets
           cp LICENSE.txt THIRD-PARTY.md web/
           cp upstream/third-party.txt web/upstream-third-party.txt
           test -s web/index.html
           test -s web/app.js
           test -s web/worker.js
-          tar -czf AltStackMail-web.tar.gz -C web .
-          sha256sum AltStackMail-web.tar.gz > AltStackMail-web.tar.gz.sha256
+          tar -czf VigilMail-web.tar.gz -C web .
+          sha256sum VigilMail-web.tar.gz > VigilMail-web.tar.gz.sha256
           mkdir -p corresponding-source/altstack
           git archive HEAD | tar -x -C corresponding-source/altstack
           tar --exclude=.git --exclude=node_modules --exclude=build --exclude=cache --exclude=target -czf corresponding-source/tuta.tar.gz -C upstream .
-          tar -czf AltStackMail-source.tar.gz -C corresponding-source .
-          sha256sum AltStackMail-source.tar.gz > AltStackMail-source.tar.gz.sha256
+          tar -czf VigilMail-source.tar.gz -C corresponding-source .
+          sha256sum VigilMail-source.tar.gz > VigilMail-source.tar.gz.sha256
       - name: Verify real Mail login and Calendar navigation on desktop and mobile
         env:
           ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
@@ -87,8 +87,8 @@ jobs:
         with:
           name: Mail-web
           path: |
-            AltStackMail-web.tar.gz*
-            AltStackMail-source.tar.gz*
+            VigilMail-web.tar.gz*
+            VigilMail-source.tar.gz*
           if-no-files-found: error
   desktop:
     needs: web
@@ -150,7 +150,7 @@ jobs:
           APP=$(ls -d release/mac*/*.app | head -1)
           codesign --verify --deep --strict --verbose=2 "$APP"
           codesign -dv "$APP" 2>&1 | grep -E 'Signature|Info.plist=' ; ! codesign -dv "$APP" 2>&1 | grep -q 'Info.plist=not bound'
-          "$APP/Contents/MacOS/Cohnsoft Mail & Calendar" --smoke-test validation/packaged-mac.png
+          "$APP/Contents/MacOS/Vigil Mail & Calendar" --smoke-test validation/packaged-mac.png
           test -s validation/packaged-mac.png
       - name: Verify desktop host launches
         timeout-minutes: 3
@@ -170,7 +170,7 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: Mail-${{ matrix.target }}
-          path: artifacts/AltStackMail-*
+          path: artifacts/VigilMail-*
           if-no-files-found: error
   publish:
     needs: [web,desktop,portal]
@@ -186,13 +186,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          test "$(find artifacts -maxdepth 1 -type f -name 'AltStackMail-*' ! -name '*.sha256' | wc -l)" -eq 8
+          test "$(find artifacts -maxdepth 1 -type f -name 'VigilMail-*' ! -name '*.sha256' | wc -l)" -eq 8
           VERSION="$(node -p "require('./package.json').version")"
           TAG="altstack-mail-v${VERSION}"
           if gh release view "$TAG" >/dev/null 2>&1; then
             echo "Release $TAG already exists; bump the version instead of replacing published installers." >&2
             exit 1
           else
-            gh release create "$TAG" artifacts/AltStackMail-* --target "$GITHUB_SHA" --title "Cohnsoft Mail & Calendar ${VERSION}" --notes-file release-notes.md
+            gh release create "$TAG" artifacts/VigilMail-* --target "$GITHUB_SHA" --title "Vigil Mail & Calendar ${VERSION}" --notes-file release-notes.md
           fi
 

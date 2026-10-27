@@ -1,0 +1,92 @@
+{
+  "repository": "https://github.com/danecohn/vigilicons",
+  "commit": "41f4ba10777880a6929e593638efbe86f8e2a64c",
+  "product": "calendar",
+  "files": [
+    {
+      "path": "desktop/calendar-512.png",
+      "source": "products/calendar/desktop/calendar-512.png",
+      "sha256": "6d510cbb2eba2fc55289a4d8898f1ffe450a381a070c8e6a63e4b5e08e57438b"
+    },
+    {
+      "path": "desktop/calendar-128.png",
+      "source": "products/calendar/desktop/calendar-128.png",
+      "sha256": "c1612cda74a92dd97ed1e454b06bab3b03b26493bea38e5ceb6f7faac32b7e31"
+    },
+    {
+      "path": "desktop/calendar-1024.png",
+      "source": "products/calendar/desktop/calendar-1024.png",
+      "sha256": "31c84f193c79af8b4bd484f3b94cce16de7e638d05279f4bfa484c28639867b8"
+    },
+    {
+      "path": "desktop/calendar.ico",
+      "source": "products/calendar/desktop/calendar.ico",
+      "sha256": "41d546cd363758c0c97e4429b2b6938d45c487aab6ced1cd5a4b1d8b0abce89d"
+    },
+    {
+      "path": "desktop/calendar-32.png",
+      "source": "products/calendar/desktop/calendar-32.png",
+      "sha256": "b66c721d2cd554e926e1071cc31c8b6b3e51c0c5a0b3d230f67b56658397efeb"
+    },
+    {
+      "path": "desktop/calendar.icns",
+      "source": "products/calendar/desktop/calendar.icns",
+      "sha256": "e8bf2bce3d03a9c2647495a068f4f41ceb362bd6579aaae2e67e37f26e70119a"
+    },
+    {
+      "path": "desktop/calendar-16.png",
+      "source": "products/calendar/desktop/calendar-16.png",
+      "sha256": "8e2d8e50cb8ab016a6df68b6d3c869338412967bf796f93d6efb8c255d974e45"
+    },
+    {
+      "path": "desktop/calendar-48.png",
+      "source": "products/calendar/desktop/calendar-48.png",
+      "sha256": "15a29d29b5dc251d5427d36d95bad12fd3a0d1e687a7a4101adb99cdb88c1ebb"
+    },
+    {
+      "path": "desktop/calendar-256.png",
+      "source": "products/calendar/desktop/calendar-256.png",
+      "sha256": "de8002c9fa582a73341ea9f11b1fccb4db50557a0b6053bcffd60b01b7272beb"
+    },
+    {
+      "path": "desktop/calendar-64.png",
+      "source": "products/calendar/desktop/calendar-64.png",
+      "sha256": "e4851245f8a3ba57b0b0889763ef739915146d3a903456bcd2f02ce6710a4210"
+    },
+    {
+      "path": "web/favicon.ico",
+      "source": "products/calendar/web/favicon.ico",
+      "sha256": "b083053eb6b403659b9b9e23acd492ed09d6b0583ae7cab8796f5b0cee2f11ca"
+    },
+    {
+      "path": "web/apple-touch-icon.png",
+      "source": "products/calendar/web/apple-touch-icon.png",
+      "sha256": "5dec92ea2fe82155cf0e76206f05b4fc8a79ff68251839c5f49137acfe004c7a"
+    },
+    {
+      "path": "web/favicon-16.png",
+      "source": "products/calendar/web/favicon-16.png",
+      "sha256": "6db56155f19d64e3e63f20756e37dde00f9bf2d9c9585e9f69b9535e2495fef5"
+    },
+    {
+      "path": "web/icon-192.png",
+      "source": "products/calendar/web/icon-192.png",
+      "sha256": "b496e585e15d1e3c5298a9818f063d9002f0b6a71782812b36b5d3cf20a9c62e"
+    },
+    {
+      "path": "web/maskable-512.png",
+      "source": "products/calendar/web/maskable-512.png",
+      "sha256": "ab16488df50764d16bef66f9d18a2d5f66abbaaacde6a0b2a380e2149c9c7acd"
+    },
+    {
+      "path": "web/favicon-32.png",
+      "source": "products/calendar/web/favicon-32.png",
+      "sha256": "1b4c7057b704c5856bcbb87de0341a4d0bcbd3757775c218295061de529907a8"
+    },
+    {
+      "path": "web/icon-512.png",
+      "source": "products/calendar/web/icon-512.png",
+      "sha256": "ab16488df50764d16bef66f9d18a2d5f66abbaaacde6a0b2a380e2149c9c7acd"
+    }
+  ]
+}
