@@ -53,7 +53,7 @@ export function createPortal({env=process.env,net=fetch,discovery}={}){
    const types={'.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.svg':'image/svg+xml','.wasm':'application/wasm','.html':'text/html; charset=utf-8','.png':'image/png','.ttf':'font/ttf','.woff2':'font/woff2','.txt':'text/plain'};
    res.setHeader('Content-Type',types[extname(file)]||'application/octet-stream');if(method==='HEAD'){res.end();return;}
    if(base && extname(file)==='.html'){
-    let markup=readFileSync(file,'utf8').replace('<head>','<head><base href="'+base+'/"><meta name="vigil-base" content="'+base+'">').replace(/(href|src|action)="\/(?!\/)/g,'$1="'+base+'/');res.end(markup);return;
+    let markup=readFileSync(file,'utf8').replace(/(href|src|action)="\/(?!\/)/g,'$1="'+base+'/').replace('<head>','<head><base href="'+base+'/"><meta name="vigil-base" content="'+base+'">');res.end(markup);return;
    }
    if(base && file===join(web,'app.js')){
     let script=readFileSync(file,'utf8');const marker=/([A-Za-z_$][\w$]*\.route\.prefix=[^;]*isNextCloudPlugin\(\)\?[^:;]+:)""/;if(!marker.test(script))error(503,'Mail routing configuration is unavailable.');script=script.replace(marker,'$1'+JSON.stringify(base));res.end(script);return;
