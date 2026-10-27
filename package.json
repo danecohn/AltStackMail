@@ -1,12 +1,12 @@
 {
   "name": "altstack-mail",
-  "productName": "AltStack Mail",
+  "productName": "Cohnsoft Mail & Calendar",
   "version": "1.0.5",
   "type": "module",
   "private": true,
   "license": "GPL-3.0-or-later",
-  "description": "AltStack Mail and Calendar, based on the Tuta browser client",
-  "author": "Artemis Softworks LLC",
+  "description": "Cohnsoft Mail & Calendar, based on the Tuta browser client",
+  "author": "Cohnsoft",
   "main": "desktop/main.mjs",
   "scripts": {
     "desktop": "electron .",
@@ -18,7 +18,7 @@
   },
   "build": {
     "appId": "org.altstack.mail",
-    "productName": "AltStack Mail",
+    "productName": "Cohnsoft Mail & Calendar",
     "directories": {
       "output": "release"
     },
@@ -58,9 +58,9 @@
       ],
       "icon": "assets/logo.png",
       "category": "Office",
-      "maintainer": "Artemis Softworks LLC"
+      "maintainer": "Cohnsoft"
     },
     "afterPack": "scripts/adhoc-sign.cjs",
-    "copyright": "Copyright \u00a9 2026 Artemis Softworks LLC"
+    "copyright": "Copyright \u00a9 2026 Cohnsoft"
   }
 }
