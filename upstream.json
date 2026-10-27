@@ -1,4 +1,4 @@
 {
- "product":"AltStack Mail and Calendar","upstream":"https://github.com/tutao/tutanota","tag":"tutanota-desktop-release-362.261023.2","commit":"d589cf8c6f6855a314db39e059cffb464f805e19","license":"GPL-3.0","backend":"https://app.tuta.com","platformOrigin":"https://www.amerika.social","mailOrigin":"https://altstackmail-production.up.railway.app","warehouseOrigin":"https://altstackwarehouse-production.up.railway.app","desktopVersion":"1.0.1","webRelease":"altstack-mail-v1.0.1"
+ "product":"Cohnsoft Mail & Calendar","upstream":"https://github.com/tutao/tutanota","tag":"tutanota-desktop-release-362.261023.2","commit":"d589cf8c6f6855a314db39e059cffb464f805e19","license":"GPL-3.0","backend":"https://app.tuta.com","platformOrigin":"https://www.amerika.social","mailOrigin":"https://altstackmail-production.up.railway.app","warehouseOrigin":"https://altstackwarehouse-production.up.railway.app","desktopVersion":"1.0.1","webRelease":"altstack-mail-v1.0.1"
 }
 
