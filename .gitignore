@@ -3,3 +3,5 @@ release/
 web/
 upstream/
 *.log
+
+node_modules
